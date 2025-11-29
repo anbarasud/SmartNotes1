@@ -1,4 +1,5 @@
 [app]
+source.dir = .
 title = SmartNotes
 package.name = smartnotes
 package.domain = org.smartnotes
