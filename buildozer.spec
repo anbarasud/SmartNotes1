@@ -3,13 +3,17 @@ source.dir = .
 title = SmartNotes
 package.name = smartnotes
 package.domain = org.smartnotes
+
 android.sdk_path = ./android-sdk
 android.ndk_path = ./android-sdk/ndk/25.1.8937393
+android.arch = armeabi-v7a, arm64-v8a
+
 source.include_exts = py,png,jpg,kv,atlas,mp3,wav,json,txt
 version = 0.2
 orientation = portrait
 fullscreen = 0
 entrypoint = main.py
+
 
 # Required packages
 requirements = python3,kivy==2.1.0,kivymd,requests,openai,pyspellchecker,plyer,gtts,pygame
