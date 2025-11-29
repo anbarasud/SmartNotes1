@@ -1,22 +1,14 @@
-# SmartNotes (Upgraded Version)
+# SmartNotes (Fixed GitHub template)
 
-SmartNotes is an AI-powered notes and task management Android app built with **KivyMD**, supporting:
+This repository template contains a ready-to-use GitHub Actions workflow that installs the modern Android SDK (cmdline-tools), accepts licenses, copies the SDK into the repository, installs the latest Buildozer from GitHub (supports modern sdkmanager layout), and runs buildozer to produce an Android debug APK.
 
-✔ Notes with AI grammar correction  
-✔ AI Assistant (OpenAI chat)  
-✔ Text-to-speech (desktop)  
-✔ Translation  
-✔ Tasks + Alarms (in-app scheduler)  
-✔ Export to Google Apps Script (Sheets + Docs)  
-✔ GitHub Actions automatic APK build  
+Files included:
+- main.py (placeholder)
+- buildozer.spec (configured to use ./android-sdk)
+- .github/workflows/build_apk.yml (workflow that installs SDK + buildozer + builds APK)
 
----
-
-# 📱 How to Build Your APK Using GitHub Actions
-
-### 1️⃣ Create a GitHub repository  
-Create a new repo named **SmartNotes** (or any name you want).
-
-### 2️⃣ Upload all files  
-Upload the folder structure exactly as provided:
-
+Usage:
+1. Create a new GitHub repo (e.g. SmartNotes)
+2. Upload all files/folders in this template (do NOT upload the zip itself; upload its contents)
+3. In GitHub Actions, run the "Build Android APK" workflow
+4. Wait for the job to complete and download the APK artifact
