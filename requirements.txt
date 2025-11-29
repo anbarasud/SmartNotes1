@@ -1,0 +1,11 @@
+kivy==2.1.0
+kivymd
+requests
+openai
+pyspellchecker
+plyer
+gtts
+pygame
+sounddevice
+soundfile
+SpeechRecognition
