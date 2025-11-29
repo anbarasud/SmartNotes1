@@ -3,10 +3,8 @@ source.dir = .
 title = SmartNotes
 package.name = smartnotes
 package.domain = org.smartnotes
-
 android.sdk_path = ./android-sdk
 android.ndk_path = ./android-sdk/ndk/25.1.8937393
-
 source.include_exts = py,png,jpg,kv,atlas,mp3,wav,json,txt
 version = 0.2
 orientation = portrait
