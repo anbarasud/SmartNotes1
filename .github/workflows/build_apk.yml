@@ -1,61 +1,20 @@
-name: Build Android APK
-
-on:
-  push:
-    branches: [ "main" ]
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y python3-pip python3-venv openjdk-17-jdk unzip wget git zlib1g-dev
-
-    - name: Setup Android SDK
+    - name: Install Android SDK + Build-tools
       run: |
         ANDROID_SDK_ROOT=$HOME/android-sdk
         mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
 
         wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip
-        unzip tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
-        mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
+        mkdir cmdline-temp
+        unzip tools.zip -d cmdline-temp
+        mv cmdline-temp/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
 
         yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
+
         yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
             "platform-tools" \
             "platforms;android-33" \
             "build-tools;33.0.2" \
             "ndk;25.1.8937393"
 
-        echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
-        echo "$ANDROID_SDK_ROOT/platform-tools" >> $GITHUB_PATH
-        echo "$ANDROID_SDK_ROOT/build-tools/33.0.2" >> $GITHUB_PATH
-
-    - name: Python setup
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-
-    - name: Install Buildozer
-      run: |
-        python -m pip install --upgrade pip
-        pip install buildozer cython==0.29.33
-
-    - name: Build APK
-      run: |
-        export PATH=$PATH:~/.local/bin
-        export ANDROIDSDK=$ANDROID_SDK_ROOT
-        buildozer android debug
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: SmartNotes-APK
-        path: bin/*.apk
+        # Copy SDK into project so Buildozer uses it
+        cp -r $ANDROID_SDK_ROOT $GITHUB_WORKSPACE/android-sdk
