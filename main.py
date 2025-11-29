@@ -1,10 +1,16 @@
-# SmartNotes placeholder main.py
-from kivy.app import App
-from kivy.uix.label import Label
+from kivy.lang import Builder
+from kivymd.app import MDApp
 
-class SmartNotesApp(App):
+KV = '''
+Screen:
+    MDLabel:
+        text: "SmartNotes1 placeholder"
+        halign: "center"
+'''
+
+class SmartNotes1App(MDApp):
     def build(self):
-        return Label(text='SmartNotes - placeholder')
+        return Builder.load_string(KV)
 
-if __name__ == '__main__':
-    SmartNotesApp().run()
+if __name__ == "__main__":
+    SmartNotes1App().run()

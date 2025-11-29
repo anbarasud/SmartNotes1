@@ -4,6 +4,4 @@ __pycache__/
 bin/
 *.apk
 *.keystore
-venv/
-env/
-.DS_Store
+android-sdk/
