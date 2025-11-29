@@ -6,7 +6,10 @@ package.domain = org.smartnotes
 
 android.sdk_path = ./android-sdk
 android.ndk_path = ./android-sdk/ndk/25.1.8937393
-android.arch = armeabi-v7a, arm64-v8a
+android.api = 33
+android.minapi = 21
+android.ndk_api = 21
+android.arch = arm64-v8a, armeabi-v7a
 
 source.include_exts = py,png,jpg,kv,atlas,mp3,wav,json,txt
 version = 0.2
