@@ -13,10 +13,33 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install required system packages
+    - name: Install system dependencies
       run: |
         sudo apt update
-        sudo apt install -y python3-pip python3-venv openjdk-17-jdk unzip zlib1g-dev git
+        sudo apt install -y python3-pip python3-venv openjdk-17-jdk unzip zlib1g-dev git wget
+
+    - name: Install Android SDK + Build-tools
+      run: |
+        mkdir -p $HOME/android-sdk
+        cd $HOME/android-sdk
+
+        # Install sdkmanager
+        wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdtools.zip
+        unzip cmdtools.zip
+        mkdir -p cmdline-tools
+        mv cmdline-tools cmdline-tools/latest
+
+        # Accept licenses
+        yes | cmdline-tools/latest/bin/sdkmanager --licenses
+
+        # Install required SDK + Build-tools
+        cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
+        # Set environment variables
+        echo "ANDROIDSDK=$HOME/android-sdk" >> $GITHUB_ENV
+        echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+        echo "PATH=$HOME/android-sdk/platform-tools:$PATH" >> $GITHUB_ENV
+        echo "PATH=$HOME/android-sdk/build-tools/33.0.2:$PATH" >> $GITHUB_ENV
 
     - name: Setup Python
       uses: actions/setup-python@v4
@@ -31,6 +54,9 @@ jobs:
     - name: Build APK using Buildozer
       run: |
         export PATH=$PATH:~/.local/bin
+        export ANDROIDSDK=$HOME/android-sdk
+        export ANDROID_HOME=$HOME/android-sdk
+        export ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-ndk
         buildozer -v android debug
 
     - name: Upload APK Artifact
