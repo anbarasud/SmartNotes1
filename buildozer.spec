@@ -11,6 +11,9 @@ android.minapi = 21
 android.ndk_api = 21
 android.arch = arm64-v8a, armeabi-v7a
 
+[buildozer]
+warn_on_root = 0
+
 source.include_exts = py,png,jpg,kv,atlas,mp3,wav,json,txt
 version = 0.2
 orientation = portrait
